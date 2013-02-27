@@ -29,11 +29,16 @@ module Codebreaker
     def guess(guess)
       marker = Marker.new(@secret, guess)
       @output.puts '+'*marker.exact_match_count + '-'*marker.number_match_count
-      if marker.exact_match_count == 4
+      maybe_you_win(marker.exact_match_count)
+    end
+
+    def maybe_you_win(exact_match_count)
+      if exact_match_count == 4
         @output.puts "You win at #{@current_guess} guess! Enter your name:"
         save_result(gets.chomp)
         gameover(false)
       end
+      exact_match_count == 4
     end
 
     def hint

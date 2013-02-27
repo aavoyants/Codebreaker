@@ -17,11 +17,22 @@ module Codebreaker
       end
     end
 
+    describe "#continue" do
+
+    end
+
     describe "#guess" do
       it "sends the mark to output" do
         game.start('1234')
         output.should_include(:puts).with('+++-')
         game.guess('1233')
+      end
+
+      it "wins when exact match" do
+        game.start('1234')
+        game.stub(:maybe_you_win).and_return(true)
+        output.should_include(:puts).with('You win')
+        game.start('1234')
       end
     end
   end
